@@ -1,11 +1,25 @@
 pipeline {
-    agent { docker { image 'python:3.7.1-stretch' } }
+    agent {
+        docker {
+            image 'python:3-stretch'
+        }
+    }
     stages {
-        stage('build') {
+        stage('Build') {
             steps {
-                sh 'python --version'
+                checkout scm
+                sh 'pip install -r requirements.txt'
             }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing...'
+            }
+            // post {
+            //     always {
+            //         junit 'test-reports/results.xml'
+            //     }
+            // }
         }
     }
 }
-

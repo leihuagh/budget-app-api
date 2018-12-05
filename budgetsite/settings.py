@@ -35,6 +35,7 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'django_jenkins',
     'budgetapp.apps.BudgetappConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -156,4 +157,8 @@ CORS_ALLOW_CREDENTIALS = True
 
 CORS_ORIGIN_WHITELIST = (
     'localhost:3000',
+)
+
+JENKINS_TASKS = (
+    'django_jenkins.tasks.run_flake8',
 )
