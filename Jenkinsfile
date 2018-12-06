@@ -13,13 +13,13 @@ pipeline {
         }
         stage('Test') {
             steps {
-                echo 'Testing...'
+                sh 'python manage.py jenkins --enable-coverage'
             }
-            // post {
-            //     always {
-            //         junit 'test-reports/results.xml'
-            //     }
-            // }
+            post {
+                always {
+                    junit 'reports/junit.xml'
+                }
+            }
         }
     }
 }
