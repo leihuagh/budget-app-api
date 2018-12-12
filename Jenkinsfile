@@ -8,12 +8,16 @@ pipeline {
         stage('Build') {
             steps {
                 checkout scm
-                sh 'pip install -r requirements.txt --user'
+                withPythonEnv('python') {
+                    sh 'pip install -r requirements.txt --user'
+                }
             }
         }
         stage('Test') {
             steps {
-                sh 'python manage.py jenkins --enable-coverage'
+                withPythonEnv('python') {
+                    sh 'python manage.py jenkins --enable-coverage'
+                }
             }
             post {
                 always {
