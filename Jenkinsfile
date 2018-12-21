@@ -1,17 +1,20 @@
 pipeline {
-    agent {
-        docker {
-            image 'python:3-stretch'
-        }
-    }
+    agent none
     stages {
         stage('Build') {
+            agent any
             steps {
-                checkout scm
-                sh 'pip install -r requirements.txt'
+                script {
+                    checkout scm
+                    def image = docker.build("budget-rest-api:${env.BUILD_ID}")
+                    image.push('latest')
+                }
             }
         }
         stage('Test') {
+            agent {
+                docker { image 'budget-rest-api:latest' }
+            }
             steps {
                 sh 'python manage.py jenkins --enable-coverage'
             }
